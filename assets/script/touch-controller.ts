@@ -8,11 +8,16 @@
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class UILayer extends cc.Component {
+export default class TouchController extends cc.Component {
 
     canvas: any = null;
     graphics: any = null;
     camera: any = null;
+    
+    @property
+    swiping: boolean = false;
+    @property(cc.Vec2)
+    swipeVector: cc.Vec2 = cc.v2(0, 0); 
 
     controllerLineStart: cc.Vec2 = cc.v2(0, 0);
 
@@ -50,6 +55,16 @@ export default class UILayer extends cc.Component {
         return location;
     }
 
+    updateSwipeVector(touchLocation: cc.Vec2) {
+        let vx = touchLocation.x - this.controllerLineStart.x;
+        let vy = touchLocation.y - this.controllerLineStart.y;
+        this.swipeVector = cc.v2(vx, vy);
+    }
+
+    resetSwipeVector() {
+        this.swipeVector = cc.v2(0, 0);
+    }
+
     onLoad () {
         this.canvas = this.node.parent;
         this.camera = cc.Camera.findCamera(this.node);
@@ -58,19 +73,26 @@ export default class UILayer extends cc.Component {
         this.canvas.on(cc.Node.EventType.TOUCH_START, (e: cc.Event.EventTouch) => {
             let location = this.screenToWorldPoint(e.getLocation());
             this.resetLatestLocation(location);
+            this.swiping = true;
+            this.resetSwipeVector();
         });
         this.canvas.on(cc.Node.EventType.TOUCH_MOVE, (e: cc.Event.EventTouch) => {
             // let location = this.camera.getScreenToWorldPoint(e.getLocation());
             let location = this.screenToWorldPoint(e.getLocation());
             this.drawControllerLine(location);
+            this.updateSwipeVector(location);
         });
         this.canvas.on(cc.Node.EventType.TOUCH_END, (e: cc.Event.EventTouch) => {
             let location = e.getLocation();
             this.clearControllerLine();
+            this.swiping = false;
+            this.resetSwipeVector();
         });
         this.canvas.on(cc.Node.EventType.TOUCH_CANCEL, (e: cc.Event.EventTouch) => {
             let location = e.getLocation();
             this.clearControllerLine();
+            this.swiping = false;
+            this.resetSwipeVector();
         });
         
     }
