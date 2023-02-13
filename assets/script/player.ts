@@ -1,10 +1,3 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
-
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -12,7 +5,7 @@ export default class Player extends cc.Component {
 
     touchController: any = null;
     rigidBody: any = null;
-    
+
     onLoad() {
         let physicsManager = cc.director.getPhysicsManager(); // 物理マネージャーを取得する
         physicsManager.enabled = true; // 物理マネージャーを有効にする
@@ -33,7 +26,8 @@ export default class Player extends cc.Component {
 
         // touch-controllerの入力を読み取って動作する
         if (this.touchController.swiping) {
-            this.rigidBody.linearVelocity = this.touchController.swipeVector;
+            let vel = this.touchController.swipeVec;
+            this.rigidBody.linearVelocity = vel;
         } else {
             this.rigidBody.linearVelocity = cc.v2(0, 0);
         }

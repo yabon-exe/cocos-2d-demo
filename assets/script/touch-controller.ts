@@ -1,10 +1,3 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
-
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -13,39 +6,48 @@ export default class TouchController extends cc.Component {
     canvas: any = null;
     graphics: any = null;
     camera: any = null;
-    
+
     @property
     swiping: boolean = false;
     @property(cc.Vec2)
-    swipeVector: cc.Vec2 = cc.v2(0, 0); 
+    swipeVec: cc.Vec2 = cc.v2(0, 0);
+    swipeVecBase: cc.Vec2 = cc.v2(0, 0);
+    @property
+    swipeScale = 1.0;
+    @property
+    swipeDistanceLimit = 500.0;
+
 
     controllerLineStart: cc.Vec2 = cc.v2(0, 0);
 
-    resetLatestLocation(touchLocation: cc.Vec2){
+    resetLatestLocation(touchLocation: cc.Vec2) {
         this.controllerLineStart = touchLocation;
     }
 
-    drawControllerLine (touchLocation: cc.Vec2) {
+    drawControllerLine(touchLocation: cc.Vec2) {
         this.graphics.clear();
 
-        let distance = this.controllerLineStart.sub(touchLocation).mag();
-
-        if (distance > 500.0) {
-            distance = 500.0;
+        let distance = this.swipeVec.mag();
+        if (distance > this.swipeDistanceLimit) {
+            distance = this.swipeDistanceLimit;
         }
+        let lineTo = this.swipeVecBase;
+        lineTo.normalizeSelf();
+        lineTo.mulSelf(distance);
+
         this.graphics.lineWidth = distance / 5.0;
         this.graphics.strokeColor = cc.Color.WHITE;
         this.graphics.strokeColor.setA(128);
-        this.graphics.moveTo(this.controllerLineStart.x,this.controllerLineStart.y);
-        this.graphics.lineTo(touchLocation.x, touchLocation.y);
+        this.graphics.moveTo(this.controllerLineStart.x, this.controllerLineStart.y);
+        this.graphics.lineTo(lineTo.x, lineTo.y);
         this.graphics.stroke();
     }
 
-    clearControllerLine () {
+    clearControllerLine() {
         this.graphics.clear();
     }
 
-    screenToWorldPoint (touchLocation: cc.Vec2) {
+    screenToWorldPoint(touchLocation: cc.Vec2) {
         let location = touchLocation;
         let canvasSize = this.canvas.getContentSize();
         let x = location.x - canvasSize.width / 2.0;
@@ -58,14 +60,15 @@ export default class TouchController extends cc.Component {
     updateSwipeVector(touchLocation: cc.Vec2) {
         let vx = touchLocation.x - this.controllerLineStart.x;
         let vy = touchLocation.y - this.controllerLineStart.y;
-        this.swipeVector = cc.v2(vx, vy);
+        this.swipeVecBase = cc.v2(vx, vy);
+        this.swipeVec = cc.v2(vx * this.swipeScale, vy * this.swipeScale);
     }
 
     resetSwipeVector() {
-        this.swipeVector = cc.v2(0, 0);
+        this.swipeVec = cc.v2(0, 0);
     }
 
-    onLoad () {
+    onLoad() {
         this.canvas = this.node.parent;
         this.camera = cc.Camera.findCamera(this.node);
         this.graphics = this.node.getComponent(cc.Graphics);
@@ -94,7 +97,7 @@ export default class TouchController extends cc.Component {
             this.swiping = false;
             this.resetSwipeVector();
         });
-        
+
     }
 
     start() {
@@ -102,7 +105,7 @@ export default class TouchController extends cc.Component {
 
     }
 
-    update (dt) {
+    update(dt) {
 
     }
 }
