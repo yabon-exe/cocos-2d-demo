@@ -48,7 +48,7 @@ export default class TouchController extends cc.Component {
     スワイプラインを描画する（ぷにコン？みたいなもの）
     @param touchLocation 画面タッチ位置
     */
-    drawSwipeLine(touchLocation: cc.Vec2) {
+    drawSwipeLine() {
         this.graphics.clear();
 
         let distance = this.swipeVec.mag()  / 5.0;
@@ -56,8 +56,10 @@ export default class TouchController extends cc.Component {
             // スワイプベクトルの最大値制限
             distance = this.swipeDistanceLimit;
         }
-        let lineTo = this.swipeVecBase;
-
+        let lineTo = cc.v2(
+            this.controllerLineStart.x + this.swipeVecBase.x,
+            this.controllerLineStart.y + this.swipeVecBase.y
+        );
 
         // スワイプライン描画
         this.graphics.lineWidth = distance / 5.0;
@@ -125,22 +127,22 @@ export default class TouchController extends cc.Component {
         this.canvas.on(cc.Node.EventType.TOUCH_MOVE, (e: cc.Event.EventTouch) => {
             // スワイプ中
             let location = this.screenToWorldPoint(e.getLocation());
-            this.drawSwipeLine(location);
             this.updateSwipeVec(location);
+            this.drawSwipeLine();
         });
         this.canvas.on(cc.Node.EventType.TOUCH_END, (e: cc.Event.EventTouch) => {
             // スワイプ終了
             let location = e.getLocation();
-            this.clearGraphics();
             this.swiping = false;
             this.resetSwipeVec();
+            this.clearGraphics();
         });
         this.canvas.on(cc.Node.EventType.TOUCH_CANCEL, (e: cc.Event.EventTouch) => {
             // スワイプキャンセル
             let location = e.getLocation();
-            this.clearGraphics();
             this.swiping = false;
             this.resetSwipeVec();
+            this.clearGraphics();
         });
     }
 
