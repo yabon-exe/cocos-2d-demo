@@ -51,14 +51,13 @@ export default class TouchController extends cc.Component {
     drawSwipeLine(touchLocation: cc.Vec2) {
         this.graphics.clear();
 
-        let distance = this.swipeVec.mag();
+        let distance = this.swipeVec.mag()  / 5.0;
         if (distance > this.swipeDistanceLimit) {
             // スワイプベクトルの最大値制限
             distance = this.swipeDistanceLimit;
         }
         let lineTo = this.swipeVecBase;
-        lineTo.normalizeSelf();
-        lineTo.mulSelf(distance);
+
 
         // スワイプライン描画
         this.graphics.lineWidth = distance / 5.0;
