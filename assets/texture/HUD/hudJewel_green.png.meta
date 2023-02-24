@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "28bb32ad-648e-46b4-8a09-75a24e85bc26",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 128,
+  "height": 128,
+  "platformSettings": {},
+  "subMetas": {
+    "hudJewel_green": {
+      "ver": "1.0.6",
+      "uuid": "f8ca38d0-f64d-4c88-b2b6-e8978e987a72",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "28bb32ad-648e-46b4-8a09-75a24e85bc26",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -4,
+      "trimX": 18,
+      "trimY": 33,
+      "width": 92,
+      "height": 70,
+      "rawWidth": 128,
+      "rawHeight": 128,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

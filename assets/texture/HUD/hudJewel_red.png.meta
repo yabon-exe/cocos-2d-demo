@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "190058a9-bd21-4c4d-90cd-f573a7974fdf",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 128,
+  "height": 128,
+  "platformSettings": {},
+  "subMetas": {
+    "hudJewel_red": {
+      "ver": "1.0.6",
+      "uuid": "287d23e4-5744-49aa-98ee-76212e223a44",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "190058a9-bd21-4c4d-90cd-f573a7974fdf",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -4,
+      "trimX": 18,
+      "trimY": 33,
+      "width": 92,
+      "height": 70,
+      "rawWidth": 128,
+      "rawHeight": 128,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
