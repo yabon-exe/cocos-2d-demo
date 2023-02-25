@@ -11,7 +11,7 @@ export default class Battery extends cc.Component {
     bulletPrefab: any = null; // 弾のPrefab
 
     @property
-    bulletInterval = 5.0; // 弾の発射間隔
+    bulletInterval = 3.0; // 弾の発射間隔
 
     /**
      * 設定された弾丸を発射

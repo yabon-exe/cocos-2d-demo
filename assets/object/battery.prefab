@@ -117,8 +117,7 @@
     },
     "_enabled": true,
     "bulletPrefab": null,
-    "bulletSpeed": 0,
-    "bulletInterval": 0,
+    "bulletInterval": 3,
     "_id": ""
   },
   {
