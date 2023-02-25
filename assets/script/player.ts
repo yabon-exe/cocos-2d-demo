@@ -1,7 +1,7 @@
 const { ccclass, property } = cc._decorator;
 
 /**
-プレイヤー
+* プレイヤー
 */
 @ccclass
 export default class Player extends cc.Component {

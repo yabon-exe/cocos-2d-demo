@@ -1,27 +1,33 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
+/**
+* 弾丸発射台
+*/
 @ccclass
-export default class NewClass extends cc.Component {
+export default class Battery extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
+    @property(cc.Prefab)
+    bulletPrefab: any = null; // 弾のPrefab
 
     @property
-    text: string = 'hello';
+    bulletInterval = 5.0; // 弾の発射間隔
 
-    // LIFE-CYCLE CALLBACKS:
+    /**
+     * 設定された弾丸を発射
+     */
+    fire() {
+        // 弾のPrefabをインスタンス化(登場)させる
+        const bullet = cc.instantiate(this.bulletPrefab);
+        // 弾の位置は発射台と同じにする
+        bullet.setPosition(this.node.position);
+        // 弾は自分(発射台)の子オブジェクトとする
+        bullet.parent = this.node.parent;
+    }
 
-    // onLoad () {}
-
-    start () {
-
+    start() {
+        // 弾の発射設定
+        this.schedule(this.fire, this.bulletInterval);
     }
 
     // update (dt) {}

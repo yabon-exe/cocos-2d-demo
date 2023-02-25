@@ -151,7 +151,7 @@ export default class TouchController extends cc.Component {
 
     }
 
-    update(dt) {
+    update() {
 
     }
 }
